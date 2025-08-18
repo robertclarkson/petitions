@@ -1,0 +1,48 @@
+{
+    "name": "silverstripe/installer",
+    "type": "silverstripe-recipe",
+    "description": "The SilverStripe Framework Installer",
+    "require": {
+        "php": "^8.1",
+        "silverstripe/recipe-plugin": "~2.0.1@stable",
+        "silverstripe/vendor-plugin": "~2.0.3@stable",
+        "silverstripe/recipe-cms": "~5.3.0@stable",
+        "silverstripe-themes/simple": "~3.3.2@stable",
+        "silverstripe/login-forms": "~5.3.0@stable",
+        "dompdf/dompdf": "^3.0",
+        "undefinedoffset/silverstripe-nocaptcha": "^2.3",
+        "colymba/gridfield-bulk-editing-tools": "^4.0@stable",
+        "silverstripe/userforms": "^6.0@stable",
+        "stripe/stripe-php": "^13.0",
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "extra": {
+        "resources-dir": "_resources",
+        "project-files-installed": [
+            "app/.htaccess",
+            "app/_config.php",
+            "app/_config/mimevalidator.yml",
+            "app/_config/mysite.yml",
+            "app/src/Page.php",
+            "app/src/PageController.php"
+        ],
+        "public-files-installed": [
+            ".htaccess",
+            "index.php",
+            "web.config"
+        ]
+    },
+    "config": {
+        "process-timeout": 600,
+        "allow-plugins": {
+            "composer/installers": true,
+            "silverstripe/recipe-plugin": true,
+            "silverstripe/vendor-plugin": true
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

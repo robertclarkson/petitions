@@ -1,0 +1,10 @@
+---
+Name: approutes
+---
+SilverStripe\Control\Director:
+  rules:
+    'event-registration//$Action/$ID/$Name': 'EventSignupController'
+    'stripe//$Action/$ID/$Name': 'StripeController'
+    'firebaselogin//$Action/$ID/$Name': 'FirebaseLoginController'
+    'profile//$Action/$ID/$Name': 'ProfileController'
+   

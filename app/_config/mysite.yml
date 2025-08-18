@@ -1,0 +1,71 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: app
+
+SilverStripe\Control\Email\Email:
+  admin_email: 
+    test@robertclarkson.net: 'Petition Submissions Portal'
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - SiteConfigExtension
+
+SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
+    default_spam_protector: UndefinedOffset\NoCaptcha\Forms\NocaptchaProtector
+
+UndefinedOffset\NoCaptcha\Forms\NocaptchaField:
+    site_key: "6Ldm7OoZAAAAAH7OgH1jQh4dcqvi8yw936eEzboa" #Your site key (required)
+    secret_key: "6Ldm7OoZAAAAAI9Xh7zpFEf0DlddVOYawFUuL_fy" #Your secret key (required)
+    recaptcha_version: 2 # 2 or 3
+    minimum_score: 0.2 # minimum spam score to achieve. Any less is blocked
+    verify_ssl: true #Allows you to disable php-curl's SSL peer verification by setting this to false (optional, defaults to true)
+    default_theme: "light" #Default theme color (optional, light or dark, defaults to light)
+    default_type: "image" #Default captcha type (optional, image or audio, defaults to image)
+    default_size: "normal" #Default size (optional, normal, compact or invisible, defaults to normal)
+    default_badge: "bottomright" #Default badge position (bottomright, bottomleft or inline, defaults to bottomright)
+    proxy_server: "" #Your proxy server address (optional)
+    proxy_port: "" #Your proxy server address port (optional)
+    proxy_auth: "" #Your proxy server authentication information (optional)
+
+SilverStripe\Core\Injector\Injector:
+ SilverStripe\Assets\Image_Backend:
+   properties:
+     Quality: 100
+
+SilverStripe\UserForms\Model\UserDefinedForm:
+  upgrade_on_build: false
+
+---
+Name: my-project-assetsflysystem
+After: '#assetsflysystem'
+---
+# SilverStripe 4.4 changes the way files are resolved. `silverstripe-assets` resolves files using a variety of formats
+# by default. When starting a brand new project on SilverStripe 4.4 or greater, those extra formats are not needed and
+# will slowdown file resolution requests a bit. This config removes those redundant formats.
+SilverStripe\Core\Injector\Injector:
+  # Define public resolution strategy
+  SilverStripe\Assets\FilenameParsing\FileResolutionStrategy.public:
+    class: SilverStripe\Assets\FilenameParsing\FileIDHelperResolutionStrategy
+    properties:
+      ResolutionFileIDHelpers:
+        - '%$SilverStripe\Assets\FilenameParsing\HashFileIDHelper'
+      DefaultFileIDHelper: '%$SilverStripe\Assets\FilenameParsing\NaturalFileIDHelper'
+      VersionedStage: Live
+  # Define protected resolution strategy
+  SilverStripe\Assets\FilenameParsing\FileResolutionStrategy.protected:
+    class: SilverStripe\Assets\FilenameParsing\FileIDHelperResolutionStrategy
+    properties:
+      DefaultFileIDHelper: '%$SilverStripe\Assets\FilenameParsing\HashFileIDHelper'
+      ResolutionFileIDHelpers:
+        - '%$SilverStripe\Assets\FilenameParsing\HashFileIDHelper'
+      VersionedStage: Stage
+
+SilverStripe\Admin\LeftAndMain:
+  extra_requirements_css:
+    - app/css/CustomAdmin.css
+
+SilverStripe\Security\Member:
+  extensions:
+    - MemberExtension
