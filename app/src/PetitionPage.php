@@ -32,6 +32,7 @@ use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\ORM\FieldType\DBDate;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\SiteConfig\SiteConfig;
@@ -57,9 +58,15 @@ use SilverStripe\View\ThemeResourceLoader;
             'EmailTo' => 'Varchar(255)',
             'CcTo' => 'Varchar(255)',
 
-                
+            "Resident" => 'Boolean',
+            "Business" => 'Boolean',
+            "Work" => 'Boolean',
+            "Recreation" => 'Boolean',
+
             'ConfirmationEmail' => 'HTMLText',
             'SubmissionEmail' => 'HTMLText',
+
+            'BeerwahOptions' => 'Enum("support,oppose,neither")'
 	    ];
 
 	    private static $owns = [
@@ -92,21 +99,21 @@ use SilverStripe\View\ThemeResourceLoader;
 	    	$fieldList = parent::getCMSFields();
 
 	    	$fieldList->dataFieldByName('Content')->setTitle('Pre-amble for the submission');
-            $fieldList->insertAfter('MenuTitle', UploadField::create('Image', 'Inspiring Image'));
-	    	$fieldList->insertAfter('MenuTitle', UploadField::create('GalleryImage', 'Inspiring Images for Gallery'));
+            // $fieldList->insertAfter('MenuTitle', UploadField::create('Image', 'Inspiring Image'));
+	    	// $fieldList->insertAfter('MenuTitle', UploadField::create('GalleryImage', 'Inspiring Images for Gallery'));
 
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', TextField::create('ApplicationReferenceNumber'));
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', TextField::create('ApplicantsName'));
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('ApplicationDetails'));
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', TextField::create('ApplicationLocation'));
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', DatetimeField::create('ClosingDate'));
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', DropdownField::create('DefaultSupportPosition', 'Set the default for the support/oppose dropdown', [
-                    'support' => 'Support the submission', 
-                    'oppose' => 'Oppose the submission'
-                ])->setEmptyString('Please select....'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', TextField::create('ApplicationReferenceNumber'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', TextField::create('ApplicantsName'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('ApplicationDetails'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', TextField::create('ApplicationLocation'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', DatetimeField::create('ClosingDate'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', DropdownField::create('DefaultSupportPosition', 'Set the default for the support/oppose dropdown', [
+            //         'support' => 'Support the submission', 
+            //         'oppose' => 'Oppose the submission'
+            //     ])->setEmptyString('Please select....'));
 	    	$fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('MySubmissionIs'));
-	    	$fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('Reasons'));
-            $fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('Decision'));
+	    	// $fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('Reasons'));
+            // $fieldList->addFieldToTab('Root.PetitionDetails', TextareaField::create('Decision'));
             $fieldList->addFieldToTab('Root.PetitionDetails', EmailField::create('EmailTo'));
 	    	$fieldList->addFieldToTab('Root.PetitionDetails', EmailField::create('CcTo'));
 
@@ -161,39 +168,52 @@ use SilverStripe\View\ThemeResourceLoader;
             $fields->push(TextField::create('City'));
             $fields->push(TextField::create('Postcode'));
 
-            $applicantfields = CompositeField::create();
-            $applicantfields->push(HeaderField::create('h2', 'Applicant Details'));
-            $applicantfields->push(LiteralField::create('h2', '<p>These are the details of the entity which has submitted the Resource Consent to Council, so we have pre-populated this for you.</p>'));
+            // $applicantfields = CompositeField::create();
+            // $applicantfields->push(HeaderField::create('h2', 'Applicant Details'));
+            // $applicantfields->push(LiteralField::create('h2', '<p>These are the details of the entity which has submitted the Resource Consent to Council, so we have pre-populated this for you.</p>'));
             
-            $applicantfields->push(TextField::create('ApplicantsName', 'Applicant\'s Name')->performReadonlyTransformation());
-            $applicantfields->push(TextField::create('ApplicationReferenceNumber')->performReadonlyTransformation());
-            $applicantfields->push(TextareaField::create('ApplicationDetails')->performReadonlyTransformation());
-            $applicantfields->push(TextareaField::create('ApplicationLocation')->performReadonlyTransformation());
+            // $applicantfields->push(TextField::create('ApplicantsName', 'Applicant\'s Name')->performReadonlyTransformation());
+            // $applicantfields->push(TextField::create('ApplicationReferenceNumber')->performReadonlyTransformation());
+            // $applicantfields->push(TextareaField::create('ApplicationDetails')->performReadonlyTransformation());
+            // $applicantfields->push(TextareaField::create('ApplicationLocation')->performReadonlyTransformation());
             
-            $fields->push($applicantfields);
-            // $applicantfields->getChildren()->setValues($this->dataRecord->toMap());
-            $applicantfields->getChildren()->makeReadonly();
+            // $fields->push($applicantfields);
+            // // $applicantfields->getChildren()->setValues($this->dataRecord->toMap());
+            // $applicantfields->getChildren()->makeReadonly();
+
+            $fields->push(HeaderField::create('h2', 'My Grounds for submission'));
+            $fields->push(CheckboxField::create('Resident', 'I am a resident of the Sunshine Coast'));
+            $fields->push(CheckboxField::create('Business', 'I do business on the Sunshine Coast'));
+            $fields->push(CheckboxField::create('Work', 'I work on the Sunshine Coast'));
+            $fields->push(CheckboxField::create('Recreation', 'I recreate on the Sunshine Coast'));
 
             $fields->push(HeaderField::create('h2', 'Submission'));
-            $fields->push(DropdownField::create('Submission', 'Do you support or oppose the submission? (We hope you '.$this->dataRecord->DefaultSupportPosition.' it)', [
-                    'support' => 'I support the submission', 
-                    'oppose' => 'I oppose the submission'
-                ])->setEmptyString('Please select....')->setValue($this->dataRecord->DefaultSupportPosition));
+            // $fields->push(DropdownField::create('Submission', 'Do you support or oppose the submission? (We hope you '.$this->dataRecord->DefaultSupportPosition.' it)', [
+            //         'support' => 'I support the submission', 
+            //         'oppose' => 'I oppose the submission'
+            //     ])->setEmptyString('Please select....')->setValue($this->dataRecord->DefaultSupportPosition));
             
-            $fields->push($heardField = DropdownField::create('Heard', 'Do you wish to be heard in support of your submission?', [
-                'Heard' => 'I do wish to be heard in support of my submission', 
-                'Not Heard' => 'I do not wish to be heard in support of my submission'
-            ])->setEmptyString('Please select...'));
-            $heardField->LeftTitle = 'What this means is that if you select that you would like to be heard, Council will get in contact and ask you to come speak in person on your submission. You can select either option, up to you!';
+            // $fields->push($heardField = DropdownField::create('Heard', 'Do you wish to be heard in support of your submission?', [
+            //     'Heard' => 'I do wish to be heard in support of my submission', 
+            //     'Not Heard' => 'I do not wish to be heard in support of my submission'
+            // ])->setEmptyString('Please select...'));
+            // $heardField->LeftTitle = 'What this means is that if you select that you would like to be heard, Council will get in contact and ask you to come speak in person on your submission. You can select either option, up to you!';
             
+            //create an optionset with the choices in it
+            $fields->push($submissionOptions = OptionsetField::create('BeerwahOptions', 'Please advise your preference for the Caloundra to Beerwah area (optional)', [
+                'oppose' => 'I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.',
+                'support' => 'I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses',
+                'neither' => 'I neither support nor oppose the proposal.'
+            ]));
+
             $fields->push($submissionIs = TextareaField::create('MySubmissionIs', 'My submission is'));
-            $submissionIs->LeftTitle = 'Here is where we would like you to talk about the particulars of the application you support or object to. We have included some ideas to help, but please, delete or adapt as you see fit.';
+            $submissionIs->LeftTitle = 'Here is where we would like you to talk about the particulars of the application you support or object to.';
 
-            $fields->push($reasons = TextareaField::create('Reasons', 'The Reasons For My Submission Are'));
-            $reasons->LeftTitle = 'Here is where we would like you to talk about your personal view around this submission. We have included some ideas to help, but please, delete or adapt as you see fit.';
+            // $fields->push($reasons = TextareaField::create('Reasons', 'The Reasons For My Submission Are'));
+            // $reasons->LeftTitle = 'Here is where we would like you to talk about your personal view around this submission. We have included some ideas to help, but please, delete or adapt as you see fit.';
 
-            $fields->push($decision = TextareaField::create('Decision', 'MY SUBMISSION WOULD BE MET BY THE QUEENSTOWN LAKES DISTRICT COUNCIL MAKING THE FOLLOWING DECISION'));
-            $decision->LeftTitle = 'Again, we\'ve pre-filled some text for you, but please, change as you see fit. This is where we ask Council to make a decision and request and conditions which may be sought.';
+            // $fields->push($decision = TextareaField::create('Decision', 'MY SUBMISSION WOULD BE MET BY THE QUEENSTOWN LAKES DISTRICT COUNCIL MAKING THE FOLLOWING DECISION'));
+            // $decision->LeftTitle = 'Again, we\'ve pre-filled some text for you, but please, change as you see fit. This is where we ask Council to make a decision and request and conditions which may be sought.';
 
 
             $fields->push(HeaderField::create('h2', 'Signature'));
@@ -216,10 +236,10 @@ use SilverStripe\View\ThemeResourceLoader;
 html
             ));
 
-            $fields->push(LiteralField::create('loadingicon', <<<html
-                <img class="cycle-loading" src="{ThemeResourceLoader::themedResourceURL('/images/cycle-loading.gif')}" />
-html
-            ));
+//             $fields->push(LiteralField::create('loadingicon', <<<html
+//                 <img class="cycle-loading" src="{ThemeResourceLoader::themedResourceURL('/images/cycle-loading.gif')}" />
+// html
+//             ));
             $fields->push(LiteralField::create('Date', '<p>'.DBField::create_field('Date', date('Y-m-d'))->format('{o} MMMM Y').'</p>'));
 
             
@@ -322,10 +342,9 @@ html
             $emailContent = str_replace('[link]', Controller::join_links($this->AbsoluteLink(),'verifySubmissionEmail',$submission->Hash), $emailContent);
             $emailContent = ShortcodeParser::get_active()->parse($emailContent);
 
-
 			$email = Email::create()
 			    ->setBody($emailContent)
-			    ->setFrom($from, 'QMTBC Submissions Portal')
+			    ->setFrom($from, 'Save our Sunny Coast Submissions Portal')
 			    ->setTo($to)
 			    ->setSubject($subjectFileName);
 
@@ -380,60 +399,60 @@ html
             $verificationThankyou = str_replace('[email]', $submission->Email, $verificationThankyou);
 
             return $this->customise([
-                'Title' => '',
+                'Title' => 'Email Verified',
                 'Content' => DBField::create_field('HTMLText', $verificationThankyou),
-                'Form' => $this->FeedbackForm()
-            ])->renderWith('Page');
+                'Form' => Form::create()
+            ])->renderWith(['Page', 'Page']);
 
         }
 
-        public function FeedbackForm() {
-            $submittedHash = $this->request->Param('ID');
-            $submission = Submission::get()->find('Hash', $submittedHash);
+        // public function FeedbackForm() {
+        //     $submittedHash = $this->request->Param('ID');
+        //     $submission = Submission::get()->find('Hash', $submittedHash);
 
-            // die(print_r($submission,true));
+        //     // die(print_r($submission,true));
 
-            $fields = FieldList::create();
-            if($submission) $fields->push(HiddenField::create('SubmissionID', '',  $submission->ID));
-            $fields->push(OptionsetField::create(
-                'Rating',
-                'How do you rate our submissions portal?',
-                [
-                    1 => "1 star - Super clunky, this thing needs a full rebuild",
-                    2 => "2 star - Quite average",
-                    3 => "3 star - A couple adjustments needed but pretty sweet",
-                    4 => "4 star - Not too shabby at all",
-                    5 => "5 star - This thing is running smooth!",
-                ], 3
-            ));
-            $fields->push(TextareaField::create('Good', 'Positive feedback, please be specific so we can take your feedback on board.'));
-            $fields->push(TextareaField::create('Bad', 'Stuff we need to improve, please be specific so we can take your feedback on board.'));
+        //     $fields = FieldList::create();
+        //     if($submission) $fields->push(HiddenField::create('SubmissionID', '',  $submission->ID));
+        //     $fields->push(OptionsetField::create(
+        //         'Rating',
+        //         'How do you rate our submissions portal?',
+        //         [
+        //             1 => "1 star - Super clunky, this thing needs a full rebuild",
+        //             2 => "2 star - Quite average",
+        //             3 => "3 star - A couple adjustments needed but pretty sweet",
+        //             4 => "4 star - Not too shabby at all",
+        //             5 => "5 star - This thing is running smooth!",
+        //         ], 3
+        //     ));
+        //     $fields->push(TextareaField::create('Good', 'Positive feedback, please be specific so we can take your feedback on board.'));
+        //     $fields->push(TextareaField::create('Bad', 'Stuff we need to improve, please be specific so we can take your feedback on board.'));
 
             
-            $actions = FieldList::create();
-            $actions->push($submit = FormAction::create('submitFeedback', 'Submit'));
-            $submit->addExtraClass('btn btn-primary');
+        //     $actions = FieldList::create();
+        //     $actions->push($submit = FormAction::create('submitFeedback', 'Submit'));
+        //     $submit->addExtraClass('btn btn-primary');
 
-            $form = Form::create($this, 'FeedbackForm', $fields, $actions);
+        //     $form = Form::create($this, 'FeedbackForm', $fields, $actions);
             
-            return $form;
-        }
+        //     return $form;
+        // }
 
 
-        public function submitFeedback($data, $form) {
-            // die(print_r($data,true));
+        // public function submitFeedback($data, $form) {
+        //     // die(print_r($data,true));
 
-            $feedback = Feedback::create();
-            $feedback->update($data);
-            $feedback->write();
+        //     $feedback = Feedback::create();
+        //     $feedback->update($data);
+        //     $feedback->write();
 
-            return $this->customise([
-                'Title' => 'Thanks',
-                'Content' => DBField::create_field('HTMLText', '<p>Thanks for your feedback</p><p><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" width="560" height="315" frameborder="0"></iframe></p>'),
-                'Form' => DBField::create_field('HTMLText', '')
-            ])->renderWith('Page');
+        //     return $this->customise([
+        //         'Title' => 'Thanks',
+        //         'Content' => DBField::create_field('HTMLText', '<p>Thanks for your feedback</p>'),
+        //         'Form' => DBField::create_field('HTMLText', '')
+        //     ])->renderWith('Page');
 
-        }
+        // }
 
 
         public function createPdfAndSend() {

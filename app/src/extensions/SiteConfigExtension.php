@@ -20,21 +20,21 @@ class SiteConfigExtension extends DataExtension{
 
 	private static $has_one = array(
 		'Logo' => Image::class,
-		'LogoBlack' => Image::class,
-		'LogoGold' => Image::class
+		// 'LogoBlack' => Image::class,
+		// 'LogoGold' => Image::class
 	);
 
 	private static $owns = [
         'Logo',
-        'LogoBlack',
-        'LogoGold'
+        // 'LogoBlack',
+        // 'LogoGold'
     ];
 
     public function UpdateCMSFields(SilverStripe\Forms\FieldList $fields){
 		$fields->addFieldToTab('Root.Main', EmailField::create('AdminEmail'));
 		$fields->addFieldToTab('Root.Main', UploadField::create('Logo'));
-		$fields->addFieldToTab('Root.Main', UploadField::create('LogoBlack'));
-		$fields->addFieldToTab('Root.Main', UploadField::create('LogoGold'));
+		// $fields->addFieldToTab('Root.Main', UploadField::create('LogoBlack'));
+		// $fields->addFieldToTab('Root.Main', UploadField::create('LogoGold'));
 		
 		$fields->addFieldToTab('Root.ThankyouMessages', 
 			HTMLEditorField::create('SubmissionThankyou')

@@ -1,16 +1,8 @@
 ---
-Name: myemailconfig
-After:
-  - '#emailconfig'
+Name: mailer-project
+After: "mailer"
 ---
 SilverStripe\Core\Injector\Injector:
-  Swift_Transport:
-    class: Swift_SmtpTransport
-    properties:
-      Host: smtp-relay.gmail.com
-      Port: 587
-      Encryption: tls
-    calls:
-      Username: [ setUsername, ['`APP_SMTP_USERNAME`'] ]
-      Password: [ setPassword, ['`APP_SMTP_PASSWORD`'] ]
-      AuthMode: [ setAuthMode, ['login'] ]
+  Symfony\Component\Mailer\Transport\TransportInterface:
+    constructor:
+      dsn: "`MAILER_DSN`"

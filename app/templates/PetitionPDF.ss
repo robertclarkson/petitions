@@ -99,16 +99,12 @@
 </head>
 	<body>
 		<div class="invoice-box">
-			<h1>Form 13: Submission</h1>
-			<h1>on a resource consent application</h1>
-            <p style="text-align: center;">Resource Management Act 1991 Section 95, 96, 127(3), 136(4), 137(5)(c), 234(4) & 41D</p>
-			<h2>To: 	Queenstown Lakes District Council</h2>
+			<h1>Proposed Planning Scheme</h1>
+			<h1>Having My Say on the Proposed Planning Scheme</h1>
+			<h2>To: Sunshine Coast Council</h2>
 
-
-			<h2>Your Details</h2>
-            <p>QLDC's preferred method of correspondence is by email and phone.</p>
+			<h2>My Details</h2>
 			<table cellpadding="0" cellspacing="0">
-				
                 <tr>
                 	<th>
                 		Name
@@ -166,81 +162,30 @@
                     </td>
                 </tr>
 	        </table>
-	               
-			<h2>Applicant Details</h2>
 
-			<table cellpadding="0" cellspacing="0">
-                <tr>
-                	<th>
-                		Applicants Name
-                	</th>
-                    <td>
-                       $SubmissionData.ApplicantsName
-                    </td>
-                </tr>
-                <tr>
-                	<th>
-                		Application Reference Number
-                	</th>
-                    <td>
-                       $SubmissionData.ApplicationReferenceNumber
-                    </td>
-                </tr>
-                <tr>
-                	<th>
-                		Application Details
-                	</th>
-                    <td>
-                       $SubmissionData.ApplicationDetails
-                    </td>
-                </tr>
-                <tr>
-                	<th>
-                		Application Location
-                	</th>
-                    <td>
-                       $SubmissionData.ApplicationLocation
-                    </td>
-                </tr>
-	        </table>
+            <h2>Grounds for making submission</h2>
+            <ul>
+                <% if Resident %><li>I am a resident of the Sunshine Coast</li><% end_if %>
+                <% if Business %><li>I do business on the Sunshine Coast</li><% end_if %>
+                <% if Work %><li>I work on the Sunshine Coast</li><% end_if %>
+                <% if Recreation %><li>I recreate on the Sunshine Coast</li><% end_if %>
+            </ul>
 
 	        <h2>Submission</h2>
 
-			<table cellpadding="0" cellspacing="0">
-                <tr>
-                	<th>
-                		<% if $Data.Submission == 'support' %>
-                            I support the submission
-                        <% else %>
-                            I oppose the submission
-                        <% end_if %>
-                	</th>
-                   
-                </tr>
-                <tr>
-                	<th>
-                        <% if $Data.Heard == 'Heard' %>
-                		  I do wish to be heard in support of my submission
-                        <% else %>
-                            I do not wish to be heard in support of my submission
-                        <% end_if %>
-                	</th>
-                   
-                </tr>
-
-            </table>
+            <p>I'd like to advise my preference for the Caloundra to Beerwah area:</p>
+            <% if BeerwahOptions == 'oppose' %>
+                <p>I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.</p>
+            <% else_if BeerwahOptions == 'support' %>
+                <p>I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses.</p>
+            <% else %>
+                <p>I neither support nor oppose the proposal.</p>
+            <% end_if %>
 
 
             <h2>My submission is</h2>
 			<p>$Data.MySubmissionIs</p>
                     
-
-            <h2>The reasons for my submission are</h2>
-			<p>$Data.Reasons</p>
-
-            <h2>My submission would be met by the Queenstown Lakes District Council making the following decision</h2>
-			<p>$Data.Decision</p>
-
 	        <h2>Signature</h2>
 	        <br />
 	        <br />

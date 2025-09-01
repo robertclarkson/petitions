@@ -172,9 +172,9 @@ class EmailSubmissionAction implements
         // $pdf->stream('Petition_'.$date->format('y-M-d').'.pdf');
 
         $subjectFileName = $submission->ClassName == 'Submission' ? 
-            $petition->ApplicationReferenceNumber.' Form 13 submission by '.$submission->Name
+            $petition->ApplicationReferenceNumber.' saveoursunnycoast submission by '.$submission->Name
             :
-            'Draft Otago CMS Submission by '.$submission->Name;
+            'Submission by '.$submission->Name;
 
 
         $from = SiteConfig::current_site_config()->AdminEmail;
