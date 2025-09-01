@@ -165,18 +165,18 @@
 
             <h2>Grounds for making submission</h2>
             <ul>
-                <% if Resident %><li>I am a resident of the Sunshine Coast</li><% end_if %>
-                <% if Business %><li>I do business on the Sunshine Coast</li><% end_if %>
-                <% if Work %><li>I work on the Sunshine Coast</li><% end_if %>
-                <% if Recreation %><li>I recreate on the Sunshine Coast</li><% end_if %>
+                <% if $Data.Resident %><li>I am a resident of the Sunshine Coast</li><% end_if %>
+                <% if $Data.Business %><li>I do business on the Sunshine Coast</li><% end_if %>
+                <% if $Data.Work %><li>I work on the Sunshine Coast</li><% end_if %>
+                <% if $Data.Recreation %><li>I recreate on the Sunshine Coast</li><% end_if %>
             </ul>
 
 	        <h2>Submission</h2>
 
             <p>I'd like to advise my preference for the Caloundra to Beerwah area:</p>
-            <% if BeerwahOptions == 'oppose' %>
+            <% if $Data.BeerwahOptions == 'oppose' %>
                 <p>I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.</p>
-            <% else_if BeerwahOptions == 'support' %>
+            <% else_if $Data.BeerwahOptions == 'support' %>
                 <p>I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses.</p>
             <% else %>
                 <p>I neither support nor oppose the proposal.</p>

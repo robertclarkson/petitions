@@ -32,6 +32,11 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             'Hash' => 'Varchar(32)',
             'Verified' => 'Boolean(0)',
             'Submitted' => 'Boolean(0)',
+            "Resident" => 'Boolean',
+            "Business" => 'Boolean',
+            "Work" => 'Boolean',
+            "Recreation" => 'Boolean',
+            'BeerwahOptions' => 'Enum("support,oppose,neither")'
         ];
 
         private static $has_one = [

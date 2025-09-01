@@ -58,15 +58,12 @@ use SilverStripe\View\ThemeResourceLoader;
             'EmailTo' => 'Varchar(255)',
             'CcTo' => 'Varchar(255)',
 
-            "Resident" => 'Boolean',
-            "Business" => 'Boolean',
-            "Work" => 'Boolean',
-            "Recreation" => 'Boolean',
+            
 
             'ConfirmationEmail' => 'HTMLText',
             'SubmissionEmail' => 'HTMLText',
 
-            'BeerwahOptions' => 'Enum("support,oppose,neither")'
+            
 	    ];
 
 	    private static $owns = [
@@ -221,7 +218,7 @@ use SilverStripe\View\ThemeResourceLoader;
             $fields->push(LiteralField::create('signaturecode', <<<html
   				<div id="signature-pad" class="signature-pad">
 	                <div class="signature-pad--body">
-	                    <canvas width="664" height="373" style="touch-action: none;"></canvas>
+	                    <canvas width="664" height="273" style="touch-action: none;"></canvas>
 	                </div>
 	                <div class="signature-pad--footer">
 	                  <div class="signature-pad--actions">
