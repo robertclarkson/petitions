@@ -13,21 +13,17 @@ SilverStripe\SiteConfig\SiteConfig:
     - SiteConfigExtension
 
 SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
-    default_spam_protector: UndefinedOffset\NoCaptcha\Forms\NocaptchaProtector
+  default_spam_protector: WebbuildersGroup\Turnstile\Forms\TurnstileProtector  #Set the default spam protector
 
-UndefinedOffset\NoCaptcha\Forms\NocaptchaField:
-    site_key: "6Ldm7OoZAAAAAH7OgH1jQh4dcqvi8yw936eEzboa" #Your site key (required)
-    secret_key: "6Ldm7OoZAAAAAI9Xh7zpFEf0DlddVOYawFUuL_fy" #Your secret key (required)
-    recaptcha_version: 2 # 2 or 3
-    minimum_score: 0.2 # minimum spam score to achieve. Any less is blocked
-    verify_ssl: true #Allows you to disable php-curl's SSL peer verification by setting this to false (optional, defaults to true)
-    default_theme: "light" #Default theme color (optional, light or dark, defaults to light)
-    default_type: "image" #Default captcha type (optional, image or audio, defaults to image)
-    default_size: "normal" #Default size (optional, normal, compact or invisible, defaults to normal)
-    default_badge: "bottomright" #Default badge position (bottomright, bottomleft or inline, defaults to bottomright)
-    proxy_server: "" #Your proxy server address (optional)
-    proxy_port: "" #Your proxy server address port (optional)
-    proxy_auth: "" #Your proxy server authentication information (optional)
+WebbuildersGroup\Turnstile\Forms\TurnstileField:
+  site_key: '`TURNSTILE_SITE_KEY`' #Your site key (required)
+  secret_key: '`TURNSTILE_SECRET_KEY`' #Your secret key (required)
+  verify_ssl: true #Allows you to disable php-curl's SSL peer verification by setting this to false (optional, defaults to true)
+  default_theme: "light" #Default theme color (optional, light, dark or auto, defaults to light)
+  js_onload_callback: null #Onload callback to be called when the JS for Turnstile is loaded
+  proxy_server: "`SS_OUTBOUND_PROXY_SERVER`" #Your proxy server address (optional)
+  proxy_port: "`SS_OUTBOUND_PROXY_PORT`" #Your proxy server address port (optional)
+  proxy_auth: "`SS_OUTBOUND_PROXY_AUTH`" #Your proxy server authentication information (optional)
 
 SilverStripe\Core\Injector\Injector:
  SilverStripe\Assets\Image_Backend:

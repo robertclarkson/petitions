@@ -8,7 +8,8 @@ module.exports = {
   entry: ['./themes/qmtbcsimple/javascript/scripts.js','./themes/qmtbcsimple/javascript/auth.js'],
   output: {
     path: __dirname+'/themes/qmtbcsimple/javascript/',
-    filename: "bundle.min.js"
+    filename: "bundle.min.js",
+    hashFunction: 'sha256',
   },
   module: {
     rules: [

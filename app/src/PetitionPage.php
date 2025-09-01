@@ -218,7 +218,7 @@ use SilverStripe\View\ThemeResourceLoader;
             $fields->push(LiteralField::create('signaturecode', <<<html
   				<div id="signature-pad" class="signature-pad">
 	                <div class="signature-pad--body">
-	                    <canvas width="664" height="273" style="touch-action: none;"></canvas>
+	                    <canvas width="664" height="223" style="touch-action: none;"></canvas>
 	                </div>
 	                <div class="signature-pad--footer">
 	                  <div class="signature-pad--actions">
@@ -255,7 +255,8 @@ html
                 'Heard',
                 'MySubmissionIs',
                 'Reasons',
-                'Decision'
+                'Decision',
+                'BeerwahOptions'
             ]);
             $form = Form::create($this, 'form', $fields, $actions, $required);
             
@@ -263,9 +264,13 @@ html
             // if($form->fields()->dataFieldByName('Name')->value() == '') {
             $fields->setValues($this->dataRecord->toMap());
             // }
-            if(Director::isLive()) $form->enableSpamProtection(array(
-               'insertBefore' => 'FieldName'
-            ));
+            // if(Director::isLive()) $form->enableSpamProtection(array(
+            //    'insertBefore' => 'FieldName'
+            // ));
+            $form->enableSpamProtection()
+                ->Fields()
+                ->fieldByName('Captcha')
+                ->setTitle('Please complete the spam protection');
             return $form;
 
         }

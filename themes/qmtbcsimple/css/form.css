@@ -22,13 +22,14 @@ fieldset {
 }
 form label {
     margin-bottom: 5px;
+    font-size: 20px;
+    line-height: 30px;
 }
     form label.left {
         display: block;
         font-weight: bold;
     }
     form label.right {
-        font-size: 12px;
         color: #888;
         text-align: left;
     }
@@ -72,19 +73,25 @@ textarea {
 
 
 /* Radio and Checkbox */
-.field .checkbox:not(.field),
-.field .radio:not(.field) {
+.field input.checkbox,
+.field input.radio {
     float: left;
-    width: 13px;
-    height: 13px;
-    margin-right: 6px;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
     margin-top: 5px;
     padding: 0;
+    flex: 1;
 }
     .checkbox label.right,
     .radio label.right {
         float: left;
     }
+
+.optionset label {
+    flex: 20;
+
+}
 
 
 /* Messages */
@@ -223,7 +230,6 @@ form .date .middleColumn input {
 
 /* Labels */
 .checkbox label.right {
-    font-size: 13px;                            /* reset to default */
     color: #333;                                /* reset to default */
 }
 form .requiredField label.left:after { /* pseudo element adds an asterisk to a required fields label */
@@ -243,6 +249,8 @@ form .optionset ul {
     form .optionset li {
         margin-bottom: 5px;
         list-style-type:none;
+        display:flex;
+        justify-items: center;
     }
     form div.checkbox:after { /* clearfix */
         content: ".";

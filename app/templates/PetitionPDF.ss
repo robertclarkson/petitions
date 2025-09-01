@@ -187,9 +187,6 @@
 			<p>$Data.MySubmissionIs</p>
                     
 	        <h2>Signature</h2>
-	        <br />
-	        <br />
-	        <br />
 			<img src="data:image/jpg;base64,$Signature" />
 			
 			<p>$Data.Name</p>
