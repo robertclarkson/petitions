@@ -41,6 +41,10 @@ form textarea {
     height: 600px;
 }
 
+form textarea[name="Other"] {
+    height: 60px;
+}
+
 form#Form_FeedbackForm textarea {
     height: 200px;
 }
@@ -88,9 +92,9 @@ textarea {
         float: left;
     }
 
-.optionset label {
+.optionset label,
+.checkbox label {
     flex: 20;
-
 }
 
 
@@ -245,6 +249,10 @@ form .checkboxset ul,
 form .optionset ul {
     margin: 0;
 }
+    form .checkbox {
+        display: flex;
+        flex-wrap: wrap;
+    }
     form .checkboxset li,
     form .optionset li {
         margin-bottom: 5px;
@@ -265,8 +273,8 @@ form .optionset ul {
 span.message {
     margin: 10px 0;
     display: block;
-    max-width: 390px;
     clear: left;
+    flex-basis: 100%;
 }
 div.holder-required {               /* This class needs to be changed - is used for both input and div */
     /* background-color: #f9d0d0;
@@ -279,6 +287,7 @@ form input.holder-required {        /* This class needs to be changed - is used 
 }
 
 /* Error messages */
+select:invalid,
 input:invalid,
 textarea:invalid {
     border-radius: 1px;

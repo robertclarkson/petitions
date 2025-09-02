@@ -22,21 +22,24 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             'Suburb' => 'Varchar(255)',
             'City' => 'Varchar(255)',
             'Postcode' => 'Varchar(10)',
+            'AgeRange' => 'Enum("19 or under, 20-29, 30-39, 40-49, 50-59, 60-69, 70-79, 80-89, 90-99, 100+")',
 
-            'Submission' => "Enum('support, oppose')",
-            'Heard' => "Enum('Heard, Not Heard')",
-
-            'MySubmissionIs' => 'Text',
-            'Reasons' => 'Text',
-            'Decision' => 'Text',
+            // 'Submission' => "Enum('support, oppose')",
+            // 'Heard' => "Enum('Heard, Not Heard')",
+            // 'Reasons' => 'Text',
+            // 'Decision' => 'Text',
             'Hash' => 'Varchar(32)',
             'Verified' => 'Boolean(0)',
             'Submitted' => 'Boolean(0)',
+            
             "Resident" => 'Boolean',
             "Business" => 'Boolean',
             "Work" => 'Boolean',
             "Recreation" => 'Boolean',
-            'BeerwahOptions' => 'Enum("support,oppose,neither")'
+            "Other" => 'Text',
+
+            'BeerwahOptions' => 'Enum("support,oppose,neither")',   
+            'MySubmissionIs' => 'Text',
         ];
 
         private static $has_one = [
@@ -50,7 +53,8 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             'Email' => 'Email',
             'PetitionPage.Title' => 'Submission',
             'isVerified' => 'Verified',
-            'isSubmitted' => 'Submitted'
+            'isSubmitted' => 'Submitted',
+            'BeerwahOptions' => 'Beerwah',
 
         ];
 
@@ -101,7 +105,7 @@ use SilverStripe\View\Parsers\ShortcodeParser;
                 throw new Exception('Submission petition does not have a "to" email address.');
             }
 
-            $render = $this->ClassName == 'Submission' ? 'PetitionPDF' : 'DocPetitionPDF';
+            $render = 'PetitionPDF';
 
             $pdf = new Dompdf();
             $pdf->output();
@@ -115,11 +119,7 @@ use SilverStripe\View\Parsers\ShortcodeParser;
 
             // $pdf->stream('Petition_'.$date->format('y-M-d').'.pdf');
 
-            $subjectFileName = $this->ClassName == 'Submission' ? 
-                $petition->ApplicationReferenceNumber.' Form 13 submission by '.$this->Name
-                :
-                'Draft Otago CMS Submission by '.$this->Name;
-
+            $subjectFileName = 'Submission by '.$this->Name;
 
             $from = SiteConfig::current_site_config()->AdminEmail;
             $to = $petition->EmailTo;

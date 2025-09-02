@@ -58,8 +58,6 @@ use SilverStripe\View\ThemeResourceLoader;
             'EmailTo' => 'Varchar(255)',
             'CcTo' => 'Varchar(255)',
 
-            
-
             'ConfirmationEmail' => 'HTMLText',
             'SubmissionEmail' => 'HTMLText',
 
@@ -157,6 +155,11 @@ use SilverStripe\View\ThemeResourceLoader;
             
             $fields->push(HeaderField::create('h2', 'Your Details'));
             $fields->push(TextField::create('Name'));
+            //19 or under, 20-29, 30-39, 40-49, 50-59, 60-69, 70-79, 80-89, 90-99, 100+
+            $fields->push(DropdownField::create('AgeRange', 'Age Range')
+                ->setSource(singleton('Submission')->dbObject('AgeRange')->enumValues())
+                ->setEmptyString('Please select...')
+            );
             $fields->push(TextField::create('Phone'));
             $fields->push(TextField::create('Email'));
             $fields->push(TextField::create('AddressLine1', 'Postal Address Line 1'));
@@ -183,6 +186,7 @@ use SilverStripe\View\ThemeResourceLoader;
             $fields->push(CheckboxField::create('Business', 'I do business on the Sunshine Coast'));
             $fields->push(CheckboxField::create('Work', 'I work on the Sunshine Coast'));
             $fields->push(CheckboxField::create('Recreation', 'I recreate on the Sunshine Coast'));
+            $fields->push(TextareaField::create('Other', 'Other grounds for submission, please specify'));
 
             $fields->push(HeaderField::create('h2', 'Submission'));
             // $fields->push(DropdownField::create('Submission', 'Do you support or oppose the submission? (We hope you '.$this->dataRecord->DefaultSupportPosition.' it)', [
@@ -246,10 +250,11 @@ html
             $submit->addExtraClass('btn btn-primary');
             $required = RequiredFields::create([
                 'Name',
+                'AgeRange',
                 'Phone',
                 'Email',
                 'AddressLine1',
-                'City',
+                'Suburb',
                 'Postcode',
                 'Submission',
                 'Heard',
@@ -276,9 +281,20 @@ html
         }
 
         public function submit($data, $form) {
-            $submissionType = $data['SubmissionType'] ? $data['SubmissionType'] : 'Submission';
 
-        	$submission = $submissionType::create();
+            if(!isset($data['Business']) && 
+                (!isset($data['Other']) || $data['Other'] == "") && 
+                !isset($data['Recreation']) && 
+                !isset($data['Work']) && 
+                !isset($data['Resident'])) {
+                    $form->sessionError('Please select at least one grounds for submission.', 'Grounds');
+                    $form->setFieldMessage('Other','Please select at least one grounds for submission.', 'error');
+                    return $this->customise([
+                        'Form' => $form
+                    ])->renderWith('Page');
+            }
+
+        	$submission = Submission::create();
         	$submission->update($data);
         	$submission->PetitionPageID = $this->ID;
         	$submission->write();
@@ -346,7 +362,7 @@ html
 
 			$email = Email::create()
 			    ->setBody($emailContent)
-			    ->setFrom($from, 'Save our Sunny Coast Submissions Portal')
+			    ->setFrom($from, 'Save Our Sunny Coast Submissions Portal')
 			    ->setTo($to)
 			    ->setSubject($subjectFileName);
 

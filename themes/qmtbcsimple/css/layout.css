@@ -256,12 +256,16 @@ body {
 		.brand h1 {
 		    margin: 0;
 		    padding: 0;
-		    font-size: 48px;
+		    font-size: 38px;
 		    font-family: 'Open Sans', sans-serif;
 		    color: #fff;
 		    font-weight: 600;
 		    font-stretch: normal; /* default value. No font stretching */
 		    line-height: 1em;
+		}
+
+		a.brand  {
+			text-decoration: none;
 		}
 		.brand p {
 		    color: #888;
@@ -684,6 +688,8 @@ body h1 span.amp {
 	    height: auto;
 	}
 	.header .primary ul {
+		position: relative;
+		margin-top:20px;
 	    margin-left: -12px;
 	    -webkit-padding-start: 0px; /* removes default webkit padding on ul items */
 	}
@@ -702,6 +708,11 @@ body h1 span.amp {
 
 	/* Navigation*/
 
+	.header .primary ul {
+		position: relative;
+		margin-top:20px;
+	}
+
 	.tablet-nav .header .brand {
 	    float: none;
 	    display: inline-block;
@@ -709,10 +720,7 @@ body h1 span.amp {
 	    margin-bottom: 22px;
 	}
 		.brand h1 {
-		    font-size: 40px;
-		}
-		.brand h1 {
-		    padding-right: 100px; /* padding stops .brand text from overlapping the search and nav buttons */
+		    font-size: 25px;
 		}
 	.tablet-nav .header {
 	    padding: 0px;

@@ -115,6 +115,14 @@
                 </tr>
                 <tr>
                 	<th>
+                		Age Range
+                	</th>
+                    <td>
+                    	$Data.AgeRange
+                    </td>
+                </tr>
+                <tr>
+                	<th>
                 		Phone
                 	</th>
                     <td>
@@ -169,6 +177,7 @@
                 <% if $Data.Business %><li>I do business on the Sunshine Coast</li><% end_if %>
                 <% if $Data.Work %><li>I work on the Sunshine Coast</li><% end_if %>
                 <% if $Data.Recreation %><li>I recreate on the Sunshine Coast</li><% end_if %>
+                <% if $Data.Other %><li>$Data.Other</li><% end_if %>
             </ul>
 
 	        <h2>Submission</h2>
