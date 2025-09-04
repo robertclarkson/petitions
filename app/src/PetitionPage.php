@@ -297,9 +297,9 @@ html
             $actions->push(LiteralField::create('submitinfo', '<p><br />&nbsp;&nbsp;&nbsp;Please click the link in the email we\'re about to send you</p>'));
             $submit->addExtraClass('btn btn-primary');
             $required = RequiredFields::create([
-                'Name',
+                'Firstname',
+                'Surname',
                 'AgeRange',
-                'Phone',
                 'Email',
                 'AddressLine1',
                 'Suburb',
