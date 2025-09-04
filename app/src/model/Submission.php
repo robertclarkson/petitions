@@ -9,12 +9,15 @@ use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\ShortcodeParser;
+use SilverStripe\i18n\Data\Intl\IntlLocales;
 
     class Submission extends DataObject 
     {
 
         private static $db = [
-            'Name' => 'Varchar(255)',
+            'Firstname' => 'Varchar(255)',
+            'Surname' => 'Varchar(255)',
+            // 'Name' => 'Varchar(255)',
             'Phone' => 'Varchar(32)',
             'Email' => 'Varchar(255)',
             'AddressLine1' => 'Varchar(255)',
@@ -22,6 +25,7 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             'Suburb' => 'Varchar(255)',
             'City' => 'Varchar(255)',
             'Postcode' => 'Varchar(10)',
+            'Country' => 'Varchar(255)',
             'AgeRange' => 'Enum("19 or under, 20-29, 30-39, 40-49, 50-59, 60-69, 70-79, 80-89, 90-99, 100+")',
 
             // 'Submission' => "Enum('support, oppose')",
@@ -38,7 +42,17 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             "Recreation" => 'Boolean',
             "Other" => 'Text',
 
-            'BeerwahOptions' => 'Enum("support,oppose")',   
+            'Beerwah' => 'Enum("support,oppose,abstain")',
+            'Revegetation' => 'Enum("support,oppose,abstain")',
+            'Sustainability' => 'Enum("support,oppose,abstain")',
+            'Traffic' => 'Enum("support,oppose,abstain")',
+            'Mooloolah' => 'Enum("support,oppose,abstain")',
+            'MaroochydoreHeight' => 'Enum("support,oppose,abstain")',
+            'Caloundra' => 'Enum("support,oppose,abstain")',
+            'Recreation' => 'Enum("support,oppose,abstain")',
+            'MaroochydoreDevelopment' => 'Enum("support,oppose,abstain")',
+            'Alexandra' => 'Enum("support,oppose,abstain")',
+
             'MySubmissionIs' => 'Text',
         ];
 
@@ -54,12 +68,19 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             'PetitionPage.Title' => 'Submission',
             'isVerified' => 'Verified',
             'isSubmitted' => 'Submitted',
-            'BeerwahOptions' => 'Beerwah',
+            'Beerwah' => 'Beerwah',
 
         ];
 
         private static $default_sort = 'Created DESC';
 
+        public function Name() {
+            return $this->Firstname . ' ' . $this->Surname;
+        }
+
+        public function FullCountry() {
+            return IntlLocales::singleton()->getCountries()[$this->Country] ?? $this->Country;
+        }
 
         public function isVerified() {
             return $this->Verified ? 'Yes' : '';

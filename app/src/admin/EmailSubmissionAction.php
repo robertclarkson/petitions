@@ -172,23 +172,23 @@ class EmailSubmissionAction implements
         // $pdf->stream('Petition_'.$date->format('y-M-d').'.pdf');
 
         $subjectFileName = $submission->ClassName == 'Submission' ? 
-            $petition->ApplicationReferenceNumber.' saveoursunnycoast submission by '.$submission->Name
+            $petition->ApplicationReferenceNumber.' saveoursunnycoast submission by '.$submission->Name()
             :
-            'Submission by '.$submission->Name;
+            'Submission by '.$submission->Name();
 
 
         $from = SiteConfig::current_site_config()->AdminEmail;
         $to = $petition->EmailTo;
 
         $emailContent = $petition->SubmissionEmail;
-        $emailContent = str_replace('[name]', $submission->Name, $emailContent);
+        $emailContent = str_replace('[name]', $submission->Firstname, $emailContent);
         $emailContent = ShortcodeParser::get_active()->parse($emailContent);
 
 
         $email = Email::create()
             ->setBody($emailContent)
-            ->setFrom($from, $submission->Name)
-            ->setReplyTo($submission->Email, $submission->Name)
+            ->setFrom($from, $submission->Name())
+            ->setReplyTo($submission->Email, $submission->Name())
             ->setTo($to)
             ->setSubject($subjectFileName);
 

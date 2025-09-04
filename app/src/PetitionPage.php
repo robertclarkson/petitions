@@ -39,6 +39,7 @@ use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\View\Parsers\ShortcodeParser;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\ThemeResourceLoader;
+use Dynamic\CountryDropdownField\Fields\CountryDropdownField;
 
     class PetitionPage extends Page {
 
@@ -153,7 +154,8 @@ use SilverStripe\View\ThemeResourceLoader;
             $fields->push(HiddenField::create('SubmissionType', '', 'Submission'));
             
             $fields->push(HeaderField::create('h2', 'Your Details'));
-            $fields->push(TextField::create('Name'));
+            $fields->push(TextField::create('Firstname'));
+            $fields->push(TextField::create('Surname'));
             //19 or under, 20-29, 30-39, 40-49, 50-59, 60-69, 70-79, 80-89, 90-99, 100+
             $fields->push(DropdownField::create('AgeRange', 'Age Range')
                 ->setSource(singleton('Submission')->dbObject('AgeRange')->enumValues())
@@ -166,6 +168,7 @@ use SilverStripe\View\ThemeResourceLoader;
             $fields->push(TextField::create('Suburb'));
             $fields->push(TextField::create('City'));
             $fields->push(TextField::create('Postcode'));
+            $fields->push(CountryDropdownField::create('Country')->setValue('au'));
 
             // $applicantfields = CompositeField::create();
             // $applicantfields->push(HeaderField::create('h2', 'Applicant Details'));
@@ -199,22 +202,69 @@ use SilverStripe\View\ThemeResourceLoader;
             // ])->setEmptyString('Please select...'));
             // $heardField->LeftTitle = 'What this means is that if you select that you would like to be heard, Council will get in contact and ask you to come speak in person on your submission. You can select either option, up to you!';
             $fields->push($submissionIs = TextareaField::create('MySubmissionIs', 'My submission is')->setValue($this->MySubmissionIs));
-            $submissionIs->LeftTitle = "We've pre-filled a submission for you to use. If you want to use it as a starting point, feel free to do so, but this is your submission, so if you want to alter or add to it, please go ahead";
+            $submissionIs->LeftTitle = "We've pre-filled a submission for you to use. If you want to use it as a starting point, feel free to do so, but this is your submission, so if you want to alter or add to it, please go ahead.";
 
             //create an optionset with the choices in it
-            $fields->push($submissionOptions = OptionsetField::create('BeerwahOptions', 'Please advise your preference for the Caloundra to Beerwah area (optional)', [
-                'oppose' => 'I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.',
-                'support' => 'I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses',
-            ])->setValue('oppose'));
+            $fields->push($submissionOptions = OptionsetField::create('Beerwah', 'Beerwah East SEQ Development Area', [
+                'oppose' => 'I strongly oppose the proposal to develop this area and strongly insist that this area is preserved in perpetuity as undeveloped natural space, revegetated with native plants and used for the community\'s recreation and natural environment. This aligns with our Vision for the coast, and themes in the proposed planning scheme. I absolutely oppose continuing the urban sprawl consuming the coast and this would exacerbate that problem.',
+                'support' => 'I strongly support the proposed development in this area.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle('The proposed Beerwah East SEQ Development area is a 5200 hectare area (about 7,500 football fields) that stretches from Beerwah, through to Caloundra. The current proposal is that this area is zoned for development, creating enormous urban sprawl that demolishes a huge portion of our open accessible space on the foot of the Glasshouse Mountains, and will NEVER be undone - once this is done, it is lost FOREVER.'));
 
+            $fields->push($submissionOptions = OptionsetField::create('Revegetation', 'Revegetation and reforestation', [
+                'oppose' => 'I strongly oppose setting firm targets for reforestation and revegetation of our native forests and bushland across the Coast.',
+                'support' => 'I strongly support setting firm targets in the order of 70% of land area being regenerated into native forest and bushland cover across the Sunshine Coast region, with this target to be reflected directly in and facilitated by the Planning Scheme, as a priority. This should form the basis of our Planning Scheme and the questions of how we manage the remaining 30% area to facilitate housing, agriculture & forestry, technology & commerce, infrastructure, educational faciltiies, cleared recreation areas and other uses can then be addressed off the back of that. The proposed plan includes some great vision statements such as "the most sustainable region in Australia" and "the region\'s outstanding biodiversity, natural assets and landscapes, including the Blackall Range and Glass House Mountains, beaches, headlands, coastal plains, waterways and wetlands are protected and enhanced and remain undiminished by development." however it monumentally fails to deliver on that promise. In fact it does the opposite, and this is completely unacceptable.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('support')->setLeftTitle('Across SEQ we have lost between 65-70 of our bushland. This level of deforestation is on the threshold of creating a non-functional ecosystem and the proposed plan does little to lead the way as it claims. We believe our community would love to see genuine and ambitious commitment to re-green the Coast. The proposed scheme includes some great elements of "Vision" however the reality is it does not deliver on that Vision to be the national leader in sustainability and conservation.'));
             
-            // $fields->push($reasons = TextareaField::create('Reasons', 'The Reasons For My Submission Are'));
-            // $reasons->LeftTitle = 'Here is where we would like you to talk about your personal view around this submission. We have included some ideas to help, but please, delete or adapt as you see fit.';
+            $fields->push($submissionOptions = OptionsetField::create('Sustainability', 'Sustainability', [
+                'oppose' => "I strongly oppose setting clear definitions around sustainability and genuinely ensuring the plan delivers to the sustainability Vision it claims.",
+                'support' => "I strongly support setting clear definitions of sustainability, and to ensure the plan literally delivers the Vision of being the most sustainable region in Australia. I note that ongoing 'growth', development and bulldozing of our limited land area is, by definition, not sustainable! I propose we allow further growth or development once we have demonstrated we can be fully sustainable at our current scale of development and population. Sustainability will not get easier by cramming more people in, it will be harder and I do not accept 'greenwashing' of a plan that does not deliver true sustainability.",
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('support')->setLeftTitle("The Proposed Scheme includes a great Vision that we believe reflects the will of the people; 'to make this the most sustainable region in Australia'. However, the Scheme absolutely fails to deliver on that and attempts to 'greenwash' the plan with fluffy words."));
 
-            // $fields->push($decision = TextareaField::create('Decision', 'MY SUBMISSION WOULD BE MET BY THE QUEENSTOWN LAKES DISTRICT COUNCIL MAKING THE FOLLOWING DECISION'));
-            // $decision->LeftTitle = 'Again, we\'ve pre-filled some text for you, but please, change as you see fit. This is where we ask Council to make a decision and request and conditions which may be sought.';
-
-
+            $fields->push($submissionOptions = OptionsetField::create('Traffic', 'Traffic & Transport', [
+                'oppose' => 'I strongly oppose continued development and densification across the Coast due to the already existing traffic congestion and parking issues. I strongly object to ever-widening and more congeted roads, bringing us closer and closer to what we see in other areas of SE Qld and eroding our quality of life. This is a fundamental consideration in our quality of life and is already unacceptably poor, with any further development compounding the issues or requiring ever larger transport infrastructure, which is directly at odds with the natural character of the Coast. ',
+                'support' => 'I strongly support continued development, increased population density and the traffic and parking congestion and larger roads that will inevitably come with this.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle("We've all felt the ever increasing traffic congestion, ever-widening roads and painful parking situation. "));
+            
+            $fields->push($submissionOptions = OptionsetField::create('Mooloolah', 'Mooloolah River Catchment Area', [
+                'oppose' => "I strongly oppose any further development of the Mooloolah River catchment area and strongly request that the native vegetation is expanded substantially and protected across both the north and south banks of the river (from around Brightwater and the Sunshine Coast Hospital, through to Palmview), and south through Meridan Plains. This river is unique and special within our Council area. The National Park should be extended across publicly owned lands and zoning of the other areas should retain it's rural character. All efforts should be made to expand the natrual habitat around this fragile ecosystem which only has a small slither remaining and has seen ever encroaching development. There is also potential here for open green space and recreation, however we should ensure this retains its natural character. I do not want this area developed with the typical developer-designed 'green space'.",
+                'support' => 'I strongly support development of the Mooloolah River catchment area. I want to see ongoing development encroaching the National Park and consuming the historic farmlands on both the north and south banks of the river.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle('The Mooloolah river is an incredible natural environment, home to incredible native flora and fauna, however the past 20 years has seen enormous destruction of the natural environment along the mid to upper reaches of the Mooloolah River with development consuming more and more of this incredible area. We believe it needs to be protected.'));
+            
+            $fields->push($submissionOptions = OptionsetField::create('MaroochydoreHeight', 'Maroochydore - unlimited height development', [
+                'oppose' => 'I strongly oppose the unlimited height development zoning the State Government has forced upon us and our community. This is at odds with the nature of and our Vision for the Coast, and I ask that the Sunshine Coast Council and our elected members pursue this with State Government to correct their poorly considered zoning. We can innovate and create a prosperous economy and healthy community without this.',
+                'support' => 'I strongly support the unlimited height development in zoning Maroochydore.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle("Our people made it clear, we don't want to be the Gold Coast. The Qld State Government has already forced through zoning of central Maroochydore to ‘UNLIMITED HEIGHT DEVELOPMENT’. That’s right, we are talking skyscrapers turning us into the next Surfers Paradise. We believe this choice was fundamentally at odds with the will of the people. This entirely changes the nature of the Coast and we believe our people want this 'undone'."));
+            
+            $fields->push($submissionOptions = OptionsetField::create('Caloundra', 'Densification from Caloundra to Kawana', [
+                'oppose' => 'I strongly oppose rezoning of the various sections between Calounda and Kawana to increase density and drive unit development. This is absolutely out of character with this area and our ‘community of communities’ ethos on the Sunshine Coast.',
+                'support' => 'I strongly support the proposed densification from Caloundra to Kawana.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle('The scheme proposes that much of the coast between Caloundra and Kawana is rezoned in order that this section is transformed to much higher density, replacing houses with up to 4-6 story apartment blocks. This rezoning has a host of impacts for residents in the area and for others on the Coast. Massively increased density, similar to Gold Coast means all the congestion that comes along with that; not only on this part of the coast, but all the spillover congestion Long term residents may be forced out of their family homes by increased rates and rebuilding a family home when it ages will literally not be allowed - the zone only allows the higher density development such as 4-6 story unit blocks.'));
+            
+            $fields->push($submissionOptions = OptionsetField::create('Recreation', 'Recreation areas and open spaces', [
+                'oppose' => 'I strongly oppose any further loss of outdoor recreation spaces, facilities or amenities our communities value. In many cases, open mindedness and respect for our various community groups, sub-cultures and history would result in much better community outcomes. I request that the use of public land be made available to reestablish any lost facilities or space for the various groups who call this place home and who will be the custodians of this public land into the future.',
+                'support' => 'I strongly support the ongoing loss of outdoor recreation spaces, facilities and amenities in order to accommodate development.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle('As the Coast has been consumed by land clearing and construction, Government has removed community amenities in favour of development and concreting of our natural open spaces. In some cases these are established clubs or facilities and conscious decisions have been made to get rid of them, while in other cases, they are just places the locals know and love being destroyed by a Government who may not understand the nuances of our local places. We believe we need to place a priority on retaining the open, outdoor, recreation spaces we love and from that, great economic outcomes and a healthy, thriving community will follow.'));
+            
+            $fields->push($submissionOptions = OptionsetField::create('MaroochydoreDevelopment', 'Maroochydore development', [
+                'oppose' => 'I strongly oppose the changes to increased heights and densities in Maroochydore. This further exacerbates the already problematic traffic and parking, creates further congestion and spillover effects. Modest development may be acceptable, however this plan goes much too far, and also proposes rezoning outside of the CBD which I strongly object to.',
+                'support' => 'I strongly support the proposed increases to heights and densities in Maroochydore.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle('While Maroochydore has evolved to be one of the main centres on the Coast, the proposal pushes for substantially increased heights and densities, which also spillover outside of the CBD.'));
+            
+            $fields->push($submissionOptions = OptionsetField::create('Alexandra', 'Alexandra Headland Development', [
+                'oppose' => 'I strongly oppose the changes to any increased heights and densities in Alexandra Headland, including the area off Mari Street. This further exacerbates the already problematic traffic and parking, creates further congestion and spillover effects and continues to erode the character of the Alexandra Headland area.',
+                'support' => 'I strongly support the proposed increases to heights and densities in Alexandra Headland.',
+                'abstain' => 'I neither support nor oppose the proposal.',
+            ])->setValue('oppose')->setLeftTitle('Alexandra Headland has a unique character along this stretch of coast, with a balanced mix of limited highrise, residential areas, and open space. The Proposed Scheme intends to substantially increase density and heights and lose open green space from Alexandra Headland, further congesting this area.'));
+            
             $fields->push(HeaderField::create('h2', 'Signature'));
             $fields->push(HiddenField::create('sig'));
             $fields->push(LiteralField::create('signaturecode', <<<html
@@ -259,7 +309,7 @@ html
                 'MySubmissionIs',
                 'Reasons',
                 'Decision',
-                'BeerwahOptions'
+                'Beerwah'
             ]);
             $form = Form::create($this, 'form', $fields, $actions, $required);
             
@@ -348,13 +398,13 @@ html
             // // Output the generated PDF to Browser
             // $dompdf->stream();
 
-            $subjectFileName = 'Please verify your submission by '.$data['Name'];
+            $subjectFileName = 'Please verify your submission by '.$data['Firstname'].' '.$data['Surname'];
 
 			$from = SiteConfig::current_site_config()->AdminEmail;
 			$to = $submission->Email;
 
             $emailContent = $this->dataRecord->ConfirmationEmail;
-            $emailContent = str_replace('[name]', $submission->Name, $emailContent);
+            $emailContent = str_replace('[name]', $submission->Firstname, $emailContent);
             $emailContent = str_replace('[link]', Controller::join_links($this->AbsoluteLink(),'verifySubmissionEmail',$submission->Hash), $emailContent);
             $emailContent = ShortcodeParser::get_active()->parse($emailContent);
 
@@ -368,7 +418,7 @@ html
 
 
             $submissionThankyou = SiteConfig::current_site_config()->SubmissionThankyou;
-            $submissionThankyou = str_replace('[name]', $submission->Name, $submissionThankyou);
+            $submissionThankyou = str_replace('[name]', $submission->Firstname, $submissionThankyou);
             $submissionThankyou = str_replace('[email]', $submission->Email, $submissionThankyou);
 
 
@@ -471,7 +521,7 @@ html
         // }
 
 
-        public function createPdfAndSend() {
+        public function createPdfAndSend($data) {
 
             Requirements::clear();
             
@@ -487,7 +537,7 @@ html
 
             // $pdf->stream('Petition_'.$date->format('y-M-d').'.pdf');
 
-            $subjectFileName = $this->dataRecord->ApplicationReferenceNumber.' Form 13 submission by '.$data['Name'];
+            $subjectFileName = $this->dataRecord->ApplicationReferenceNumber.' Form 13 submission by '.$data['Firstname'].' '.$data['Surname'];
 
 
             $from = "rob@robertclarkson.net";
@@ -497,7 +547,7 @@ html
                 ->setHTMLTemplate('Email\\SubmissionEmail') 
                 ->setData([
                     // 'Member' => Security::getCurrentUser(),
-                    'Name'=> $data['Name'],
+                    'Name'=> $data['Firstname'].' '.$data['Surname'],
                 ])
                 ->setFrom($from)
                 ->setTo($to)

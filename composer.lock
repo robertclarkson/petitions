@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fecdd42aaeaa229e3e2d168a71be102a",
+    "content-hash": "f4897960931bd877da4dd51f6f1cf049",
     "packages": [
         {
             "name": "colymba/gridfield-bulk-editing-tools",
@@ -527,6 +527,63 @@
                 "source": "https://github.com/dompdf/php-svg-lib/tree/1.0.0"
             },
             "time": "2024-04-29T13:26:35+00:00"
+        },
+        {
+            "name": "dynamic/silverstripe-country-dropdown-field",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dynamic/silverstripe-country-dropdown-field.git",
+                "reference": "3c07f942b83e6d2a3c028bb966d71f556320bd33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dynamic/silverstripe-country-dropdown-field/zipball/3c07f942b83e6d2a3c028bb966d71f556320bd33",
+                "reference": "3c07f942b83e6d2a3c028bb966d71f556320bd33",
+                "shasum": ""
+            },
+            "require": {
+                "silverstripe/framework": "^4 || ^5"
+            },
+            "require-dev": {
+                "silverstripe/recipe-testing": "^2"
+            },
+            "type": "silverstripe-vendormodule",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dynamic\\CountryDropdownField\\": "src/",
+                    "Dynamic\\CountryDropdownField\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Dynamic",
+                    "email": "dev@dynamicagency.com",
+                    "homepage": "https://www.dynamicagency.com"
+                }
+            ],
+            "description": "A simple country dropdown field for SilverStripe forms",
+            "keywords": [
+                "country",
+                "dropdown",
+                "field",
+                "form",
+                "silverstripe"
+            ],
+            "support": {
+                "issues": "https://github.com/dynamic/silverstripe-country-dropdown-field/issues",
+                "source": "https://github.com/dynamic/silverstripe-country-dropdown-field/tree/2.0.0"
+            },
+            "time": "2023-08-26T20:12:23+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -6162,63 +6219,6 @@
                 "source": "https://github.com/ua-parser/uap-php/tree/v3.10.0"
             },
             "time": "2025-07-17T15:43:24+00:00"
-        },
-        {
-            "name": "undefinedoffset/silverstripe-nocaptcha",
-            "version": "2.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/UndefinedOffset/silverstripe-nocaptcha.git",
-                "reference": "a1c853f664929cad8d68fb76ecc7ab10e27510c3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/UndefinedOffset/silverstripe-nocaptcha/zipball/a1c853f664929cad8d68fb76ecc7ab10e27510c3",
-                "reference": "a1c853f664929cad8d68fb76ecc7ab10e27510c3",
-                "shasum": ""
-            },
-            "require": {
-                "silverstripe/framework": "^4 | ^5",
-                "silverstripe/spamprotection": "^3 | ^4"
-            },
-            "type": "silverstripe-vendormodule",
-            "extra": {
-                "expose": [
-                    "javascript"
-                ],
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "UndefinedOffset\\NoCaptcha\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Ed Chipman",
-                    "homepage": "http://www.edchipman.ca",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A spam protector and form field using Google's reCAPTCHA v2 or optionally a foundation v3 implementation",
-            "keywords": [
-                "nocaptcha",
-                "recaptcha",
-                "recaptcha2",
-                "silverstripe",
-                "spamprotection"
-            ],
-            "support": {
-                "issues": "https://github.com/undefinedoffset/silverstripe-nocaptcha/issues",
-                "source": "https://github.com/UndefinedOffset/silverstripe-nocaptcha/tree/2.4.3"
-            },
-            "time": "2024-02-20T14:30:50+00:00"
         },
         {
             "name": "webbuilders-group/silverstripe-turnstile",
