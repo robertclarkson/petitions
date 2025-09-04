@@ -99,8 +99,7 @@
 </head>
 	<body>
 		<div class="invoice-box">
-			<h1>Proposed Planning Scheme</h1>
-			<h1>Having My Say on the Proposed Planning Scheme</h1>
+			<h1>My personal submission on the Proposed Sunshine Coast Planning Scheme</h1>
 			<h2>To: Sunshine Coast Council</h2>
 
 			<h2>My Details</h2>
@@ -182,15 +181,15 @@
 
 	        <h2>Submission</h2>
 
-            <p>I'd like to advise my preference for the Caloundra to Beerwah area:</p>
-            <% if $Data.BeerwahOptions == 'oppose' %>
-                <p>I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.</p>
-            <% else_if $Data.BeerwahOptions == 'support' %>
-                <p>I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses.</p>
-            <% else %>
-                <p>I neither support nor oppose the proposal.</p>
-            <% end_if %>
-
+            <p>I'd like to advise my preference for the Caloundra to Beerwah area:
+                <% if $Data.BeerwahOptions == 'oppose' %>
+                    I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.
+                <% else_if $Data.BeerwahOptions == 'support' %>
+                    I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses.
+                <% else %>
+                    I neither support nor oppose the proposal.
+                <% end_if %>
+            </p>
 
             <h2>My submission is</h2>
 			<p>$Data.MySubmissionIs</p>

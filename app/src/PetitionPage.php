@@ -50,7 +50,6 @@ use SilverStripe\View\ThemeResourceLoader;
 	        'ApplicationLocation' => 'Varchar(255)',
 	        'ClosingDate' => 'Datetime',
 
-	        'DefaultSupportPosition' => 'Enum("support,oppose")',
 	        'MySubmissionIs' => 'Text',
             'Reasons' => 'Text',
             'Decision' => 'Text',
@@ -162,8 +161,8 @@ use SilverStripe\View\ThemeResourceLoader;
             );
             $fields->push(TextField::create('Phone'));
             $fields->push(TextField::create('Email'));
-            $fields->push(TextField::create('AddressLine1', 'Postal Address Line 1'));
-            $fields->push(TextField::create('AddressLine2', 'Postal Address Line 2'));
+            $fields->push(TextField::create('AddressLine1', 'Residential Address Line 1'));
+            $fields->push(TextField::create('AddressLine2', 'Residential Address Line 2'));
             $fields->push(TextField::create('Suburb'));
             $fields->push(TextField::create('City'));
             $fields->push(TextField::create('Postcode'));
@@ -199,17 +198,16 @@ use SilverStripe\View\ThemeResourceLoader;
             //     'Not Heard' => 'I do not wish to be heard in support of my submission'
             // ])->setEmptyString('Please select...'));
             // $heardField->LeftTitle = 'What this means is that if you select that you would like to be heard, Council will get in contact and ask you to come speak in person on your submission. You can select either option, up to you!';
-            
+            $fields->push($submissionIs = TextareaField::create('MySubmissionIs', 'My submission is')->setValue($this->MySubmissionIs));
+            $submissionIs->LeftTitle = "We've pre-filled a submission for you to use. If you want to use it as a starting point, feel free to do so, but this is your submission, so if you want to alter or add to it, please go ahead";
+
             //create an optionset with the choices in it
             $fields->push($submissionOptions = OptionsetField::create('BeerwahOptions', 'Please advise your preference for the Caloundra to Beerwah area (optional)', [
                 'oppose' => 'I strongly disagree with the proposal. I want this area to be regenerated into native forest and protected in perpetuity as a community recreation zone.',
                 'support' => 'I agree with the proposal and want this area to be cleared for a housing development of 20,000 houses',
-                'neither' => 'I neither support nor oppose the proposal.'
-            ]));
+            ])->setValue('oppose'));
 
-            $fields->push($submissionIs = TextareaField::create('MySubmissionIs', 'My submission is'));
-            $submissionIs->LeftTitle = 'Here is where we would like you to talk about the particulars of the application you support or object to.';
-
+            
             // $fields->push($reasons = TextareaField::create('Reasons', 'The Reasons For My Submission Are'));
             // $reasons->LeftTitle = 'Here is where we would like you to talk about your personal view around this submission. We have included some ideas to help, but please, delete or adapt as you see fit.';
 

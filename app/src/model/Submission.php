@@ -38,7 +38,7 @@ use SilverStripe\View\Parsers\ShortcodeParser;
             "Recreation" => 'Boolean',
             "Other" => 'Text',
 
-            'BeerwahOptions' => 'Enum("support,oppose,neither")',   
+            'BeerwahOptions' => 'Enum("support,oppose")',   
             'MySubmissionIs' => 'Text',
         ];
 
