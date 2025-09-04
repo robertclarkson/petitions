@@ -187,7 +187,7 @@ use Dynamic\CountryDropdownField\Fields\CountryDropdownField;
             $fields->push(CheckboxField::create('Resident', 'I am a resident of the Sunshine Coast'));
             $fields->push(CheckboxField::create('Business', 'I do business on the Sunshine Coast'));
             $fields->push(CheckboxField::create('Work', 'I work on the Sunshine Coast'));
-            $fields->push(CheckboxField::create('Recreation', 'I recreate on the Sunshine Coast'));
+            $fields->push(CheckboxField::create('Recreate', 'I recreate on the Sunshine Coast'));
             $fields->push(TextareaField::create('Other', 'Other grounds for submission, please specify'));
 
             $fields->push(HeaderField::create('h2', 'Submission'));
@@ -332,7 +332,7 @@ html
 
             if(!isset($data['Business']) && 
                 (!isset($data['Other']) || $data['Other'] == "") && 
-                !isset($data['Recreation']) && 
+                !isset($data['Recreate']) && 
                 !isset($data['Work']) && 
                 !isset($data['Resident'])) {
                     $form->sessionError('Please select at least one grounds for submission.', 'Grounds');

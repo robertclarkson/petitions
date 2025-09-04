@@ -183,7 +183,7 @@
                 <% if $Data.Resident %><li>I am a resident of the Sunshine Coast</li><% end_if %>
                 <% if $Data.Business %><li>I do business on the Sunshine Coast</li><% end_if %>
                 <% if $Data.Work %><li>I work on the Sunshine Coast</li><% end_if %>
-                <% if $Data.Recreation %><li>I recreate on the Sunshine Coast</li><% end_if %>
+                <% if $Data.Recreate %><li>I recreate on the Sunshine Coast</li><% end_if %>
                 <% if $Data.Other %><li>$Data.Other</li><% end_if %>
             </ul>
 

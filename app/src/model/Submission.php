@@ -39,7 +39,7 @@ use SilverStripe\i18n\Data\Intl\IntlLocales;
             "Resident" => 'Boolean',
             "Business" => 'Boolean',
             "Work" => 'Boolean',
-            "Recreation" => 'Boolean',
+            "Recreate" => 'Boolean',
             "Other" => 'Text',
 
             'Beerwah' => 'Enum("support,oppose,abstain")',
