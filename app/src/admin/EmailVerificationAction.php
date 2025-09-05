@@ -149,13 +149,13 @@ class EmailVerificationAction implements
             return Controller::curr()->redirect('admin/submissions');
         }
 
-        $subjectFileName = 'Please verify your submission by '.$submission->Name;
+        $subjectFileName = 'Please verify your submission by '.$submission->Name();
 
         $from = SiteConfig::current_site_config()->AdminEmail;
         $to = $submission->Email;
 
         $emailContent = $petition->ConfirmationEmail;
-        $emailContent = str_replace('[name]', $submission->Name, $emailContent);
+        $emailContent = str_replace('[name]', $submission->Name(), $emailContent);
         $emailContent = str_replace('[link]', Controller::join_links($submission->PetitionPage()->AbsoluteLink(),'verifySubmissionEmail',$submission->Hash), $emailContent);
         $emailContent = ShortcodeParser::get_active()->parse($emailContent);
 

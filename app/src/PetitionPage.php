@@ -461,7 +461,7 @@ html
             $submission->write();
             
             $verificationThankyou = SiteConfig::current_site_config()->VerificationThankyou;
-            $verificationThankyou = str_replace('[name]', $submission->Name, $verificationThankyou);
+            $verificationThankyou = str_replace('[name]', $submission->Name(), $verificationThankyou);
             $verificationThankyou = str_replace('[email]', $submission->Email, $verificationThankyou);
 
             return $this->customise([
